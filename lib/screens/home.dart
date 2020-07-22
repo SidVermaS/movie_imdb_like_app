@@ -16,6 +16,10 @@ class _HomeState extends State<Home>  {
   
   void initState()  {
     super.initState();
+    Future.delayed(Duration.zero,() {
+    Global.width=MediaQuery.of(context).size.width;
+    Global.height=MediaQuery.of(context).size.height;
+    });
     homeBloc=BlocProvider.of<HomeBloc>(context);
     homeBloc.appWidgets.context=context;
 
@@ -36,9 +40,14 @@ class _HomeState extends State<Home>  {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: TextField(
+          onChanged: (String value) {
+            homeBloc.queryStreamSink.add(value);
+          },
           controller: homeBloc.queryTextEditingController,
           decoration: InputDecoration(
+            border: InputBorder.none,
            prefixIcon: IconButton(icon: Icon(Icons.search), onPressed: () {
+             
              homeBloc.add(FetchSearchMoviesEvent());
            },) ,
           suffixIcon:  IconButton(icon: Icon(Icons.close), onPressed: () {
@@ -85,7 +94,7 @@ class _HomeState extends State<Home>  {
   Widget loadMovies(List<Movie> moviesList) {
     return LazyLoadScrollView(
       onEndOfPage: ()=>homeBloc.add(FetchMoviesEvent()),
-      scrollOffset: 85,
+      scrollOffset: 80,
       child: ListView.builder(
       itemCount: moviesList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -97,7 +106,12 @@ class _HomeState extends State<Home>  {
             Container(
               width:Global.width,
               height: Global.height-(Global.height*0.55),
-             child: Image.network('${ConstantBaseUrls.baseImageUrl}${moviesList[index].poster_path}',fit: BoxFit.cover)),
+             child: FadeInImage.assetNetwork(
+        placeholder: 'assets/images/esperanza.jpg',
+        image: '${ConstantBaseUrls.baseImageUrl}${moviesList[index].poster_path}',
+        fit: BoxFit.cover,
+        height: 250.0,
+      )),
            
              Container(
              margin: EdgeInsets.fromLTRB(15, 0, 15, 5),

@@ -77,6 +77,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }      
   }
    Stream<HomeState> mapSearchEventToState(FetchSearchMoviesEvent event) async* {
+     if(searchPage==0)  {
+       notLoading=true;
+     }
       if(notLoading)  {
           notLoading=false;
           try {
