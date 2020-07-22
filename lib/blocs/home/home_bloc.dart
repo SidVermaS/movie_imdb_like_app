@@ -40,7 +40,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   bool notLoading=true, notSearchLoading=true;
   int page=0, searchPage=0;
   List<Movie> moviesList=List<Movie>(),searchMoviesList=List<Movie>(); 
-  Map<String, dynamic> bodyMap;
   URLQueryParams queryParams=URLQueryParams();
   Stream<HomeState> mapEventToState(HomeEvent event) async* {   
       
@@ -74,7 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
              
             } else  {     
               page--;     
-              yield HomeErrorState(message: mapResponse['message'], moviesList: moviesList);
+              yield HomeErrorState(message: mapResponse['status_message'], moviesList: moviesList);
               
             }
           } catch(e)  {
@@ -109,7 +108,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
              
             } else  {     
               searchPage--;     
-              yield HomeErrorState(message: mapResponse['message'], moviesList: searchMoviesList);
+              yield HomeErrorState(message: mapResponse['status_message'], moviesList: searchMoviesList);
               
             }
           } catch(e)  {

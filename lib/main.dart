@@ -12,10 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'IMDB App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // primaryColor: Colors.white,
+        // primaryColorDark: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BlocProvider(create:(context)=>HomeBloc(), child: Home())

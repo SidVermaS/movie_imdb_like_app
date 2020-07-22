@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+import 'package:movie_imdb_like_app/blocs/details/bloc.dart';
 import 'package:movie_imdb_like_app/blocs/home/bloc.dart';
 import 'package:movie_imdb_like_app/models/movie.dart';
 import 'package:movie_imdb_like_app/networks/constant_base_urls.dart';
+import 'package:movie_imdb_like_app/screens/details.dart';
 import 'package:movie_imdb_like_app/utils/global.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -43,35 +45,39 @@ class _HomeState extends State<Home>  {
         stream: homeBloc.showSearchBarStream,
         builder: (BuildContext context, AsyncSnapshot<bool> asyncSnapshot)  {
         return AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
+         backgroundColor: Colors.black87,
+        centerTitle:  asyncSnapshot.data,
         title: asyncSnapshot.data?TextField(
           onChanged: (String value) {
             homeBloc.queryStreamSink.add(value);
           },
+          style: TextStyle(color: Colors.white),
           controller: homeBloc.queryTextEditingController,
           decoration: InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.white),
             border: InputBorder.none,
-           prefixIcon: IconButton(icon: Icon(Icons.search), onPressed: () {
+           prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed: () {
              homeBloc.scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
              homeBloc.add(FetchSearchMoviesEvent());
            },) ,
-          suffixIcon:  IconButton(icon: Icon(Icons.close), onPressed: () {
+          suffixIcon:  IconButton(icon: Icon(Icons.close, color: Colors.white), onPressed: () {
             homeBloc.showSearchBarStreamSink.add(false);
              homeBloc.add(ClearSearchMoviesEvent());
            },) 
            
           ),
-        ):Text('IMDB', style: TextStyle(color: Colors.black)),
+        ):Text('IMDB Movies', style: TextStyle(color: Colors.white,)),
         actions: <Widget>[
           asyncSnapshot.data?SizedBox(width: 0,height: 0):
-          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed:(){
+          IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:(){
             homeBloc.showSearchBarStreamSink.add(true);
           })
         ],
       );
       })),
     body:  Container(
+       color: Colors.black,
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: BlocListener<HomeBloc, HomeState>  (
           listener: (BuildContext context, HomeState state) {
@@ -107,6 +113,7 @@ class _HomeState extends State<Home>  {
       itemCount: moviesList.length,
       itemBuilder: (BuildContext context, int index) {
         return  Container(
+          color: Colors.black,
         child: ListView(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -127,12 +134,13 @@ class _HomeState extends State<Home>  {
                Expanded(child:Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children:<Widget>  [
-                 Text('${moviesList[index].title}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700 , fontSize: 15)),
-                   Text('${homeBloc.convertDate.convertToMMMMMddyyyy(moviesList[index].release_date)}', style: TextStyle(color: Colors.black54, fontSize: 15)),
+                 Text('${moviesList[index].title}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300 , fontSize: 16)),
+                 SizedBox(height: 5),
+                   Text('${homeBloc.convertDate.convertToMMMMMddyyyy(moviesList[index].release_date)}', style: TextStyle(color: Colors.white, fontSize: 12)),
             
             ])),
-            IconButton(icon: Icon(Icons.visibility, color: Colors.blue), onPressed: ()  {
-
+            IconButton(icon: Icon(Icons.visibility, color: Colors.white), onPressed: ()  {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BlocProvider(create:(context)=> DetailsBloc(), child: Details(movie: moviesList[index]))));
             })
             ]))
           ]));

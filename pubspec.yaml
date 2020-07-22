@@ -43,7 +43,6 @@ dependencies:
   outline_material_icons: ^0.1.1
   lazy_load_scrollview: ^1.1.0
   intl: ^0.16.1  
-
   
 
 dev_dependencies:

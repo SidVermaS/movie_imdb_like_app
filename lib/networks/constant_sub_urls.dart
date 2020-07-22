@@ -1,4 +1,4 @@
 class ConstantSubUrls {
   static String getNowPlaying = '/movie/now_playing',
-      searchMovies='/search/movie';
+      searchMovies='/search/movie',movie='/movie';
 }
