@@ -96,7 +96,7 @@ class _DetailsState extends State<Details>  {
       )),
         Text(movie.title, style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300), textAlign: TextAlign.center,),
         SizedBox(height: 5.0,),
-          Text(movie.overview, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w200), textAlign: TextAlign.left,),
+          Text(movie.overview, style: TextStyle(color: Colors.white, fontSize: 17.5, fontWeight: FontWeight.w200), textAlign: TextAlign.left,),
             SizedBox(height: 10.0,),
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

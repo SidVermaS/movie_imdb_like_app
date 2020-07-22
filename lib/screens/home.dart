@@ -52,17 +52,21 @@ class _HomeState extends State<Home>  {
             homeBloc.queryStreamSink.add(value);
           },
           style: TextStyle(color: Colors.white),
+          autofocus: true,
           cursorColor: Colors.white70,
           controller: homeBloc.queryTextEditingController,
+         textInputAction: TextInputAction.search,
+         onSubmitted: (String value)  {
+            homeBloc.searchMovie();
+         },
           decoration: InputDecoration(
+            
             hintText: 'Search...',
             hintStyle: TextStyle(color: Colors.white70),
             border: InputBorder.none,
            prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed: () {
-             FocusScope.of(context).unfocus();
-             homeBloc.scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
-              homeBloc.add(ClearSearchMoviesEvent());
-             homeBloc.add(FetchSearchMoviesEvent());
+            
+            homeBloc.searchMovie();
            },) ,
           suffixIcon:  IconButton(icon: Icon(Icons.close, color: Colors.white), onPressed: () {
             homeBloc.showSearchBarStreamSink.add(false);
@@ -77,7 +81,6 @@ class _HomeState extends State<Home>  {
         actions: <Widget>[
           asyncSnapshot.data?SizedBox(width: 0,height: 0):
           IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:(){
-             FocusScope.of(context).unfocus();
             homeBloc.showSearchBarStreamSink.add(true);
           })
         ],

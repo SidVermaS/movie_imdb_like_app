@@ -127,4 +127,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
     yield HomeLoadedState(moviesList: moviesList);           
   }
+  void searchMovie()  {
+     FocusScope.of(appWidgets.context).unfocus();
+    scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
+    add(ClearSearchMoviesEvent());
+    add(FetchSearchMoviesEvent());
+  }
 }
