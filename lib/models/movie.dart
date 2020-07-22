@@ -2,7 +2,7 @@ class Movie {
   int id;
   double vote_average;
   String title,poster_path,backdrop_path,release_date,overview;
-  Movie({this.backdrop_path});
+  Movie({this.id, this.backdrop_path});
   Movie.fromJsonHome(Map<String, dynamic> map)  {
     id=map['id'];
     title=map['title'];

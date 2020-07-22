@@ -39,7 +39,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
       if(response.statusCode==200)  {
         movie=Movie.fromJsonDetails(mapResponse);
-
+        print('~~~ bloc movie: ${movie.title}');
         yield DetailsLoadedState(movie: movie); 
         
       } else  {      

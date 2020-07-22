@@ -76,7 +76,7 @@ class _DetailsState extends State<Details>  {
         image: DecorationImage(
           image: NetworkImage('${ConstantBaseUrls.baseImageUrl}${movie.backdrop_path}',),
           fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop)
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.dstATop)
         ),
         
       ),
@@ -108,7 +108,7 @@ class _DetailsState extends State<Details>  {
             children: <Widget>[
             Icon(Icons.star, color: Colors.yellow),
             SizedBox(width: 2.5,),
-            Text(movie.vote_average.toStringAsFixed(2), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400), textAlign: TextAlign.left,),
+            Text(movie.vote_average.toStringAsFixed(1), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400), textAlign: TextAlign.left,),
 
           ],)
     ],)

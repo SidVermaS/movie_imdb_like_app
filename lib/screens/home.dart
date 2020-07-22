@@ -52,18 +52,24 @@ class _HomeState extends State<Home>  {
             homeBloc.queryStreamSink.add(value);
           },
           style: TextStyle(color: Colors.white),
+          cursorColor: Colors.white70,
           controller: homeBloc.queryTextEditingController,
           decoration: InputDecoration(
             hintText: 'Search...',
-            hintStyle: TextStyle(color: Colors.white),
+            hintStyle: TextStyle(color: Colors.white70),
             border: InputBorder.none,
            prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed: () {
+             FocusScope.of(context).unfocus();
              homeBloc.scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
+              homeBloc.add(ClearSearchMoviesEvent());
              homeBloc.add(FetchSearchMoviesEvent());
            },) ,
           suffixIcon:  IconButton(icon: Icon(Icons.close, color: Colors.white), onPressed: () {
             homeBloc.showSearchBarStreamSink.add(false);
+            homeBloc.queryTextEditingController.text='';
+            homeBloc.queryStreamSink.add('');
              homeBloc.add(ClearSearchMoviesEvent());
+             
            },) 
            
           ),
@@ -71,13 +77,14 @@ class _HomeState extends State<Home>  {
         actions: <Widget>[
           asyncSnapshot.data?SizedBox(width: 0,height: 0):
           IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed:(){
+             FocusScope.of(context).unfocus();
             homeBloc.showSearchBarStreamSink.add(true);
           })
         ],
       );
       })),
     body:  Container(
-       color: Colors.black,
+       color: Colors.black87,
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: BlocListener<HomeBloc, HomeState>  (
           listener: (BuildContext context, HomeState state) {
@@ -113,7 +120,7 @@ class _HomeState extends State<Home>  {
       itemCount: moviesList.length,
       itemBuilder: (BuildContext context, int index) {
         return  Container(
-          color: Colors.black,
+          color: Colors.grey[900],
         child: ListView(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

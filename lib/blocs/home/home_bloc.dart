@@ -78,7 +78,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             }
           } catch(e)  {
             page--;
-             yield HomeErrorState(message: e.toString(), moviesList: moviesList);
+            yield HomeErrorState(message: e.toString(), moviesList: moviesList);
           }
         notLoading=true;
         }      
@@ -101,6 +101,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               List<dynamic> dynamicList=mapResponse['results'] as List<dynamic>; 
               
               dynamicList.map((i)=>searchMoviesList.add(Movie.fromJsonHome(i))).toList();
+              print('~~~  bloc len: ${searchMoviesList.length}');
               if(dynamicList.length==0) {
                 searchPage--;
               }
@@ -122,8 +123,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     searchMoviesList=List<Movie>(); 
     notLoading=true;
     searchPage=0;
-    queryTextEditingController.text='';
-    queryStreamSink.add('');
+    
     scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
     yield HomeLoadedState(moviesList: moviesList);           
   }

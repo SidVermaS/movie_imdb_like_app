@@ -16,8 +16,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // primaryColor: Colors.white,
-        // primaryColorDark: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BlocProvider(create:(context)=>HomeBloc(), child: Home())
