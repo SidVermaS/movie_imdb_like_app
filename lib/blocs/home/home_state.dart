@@ -17,6 +17,14 @@ class HomeLoadedState extends HomeState {
   List<Object> get props=>[moviesList];
 }
 
+class HomeSearchLoadedState extends HomeState {
+  List<Movie> moviesList=List<Movie>();
+
+  HomeSearchLoadedState({this.moviesList});
+
+  List<Object> get props=>[moviesList];
+}  
+
 class HomeErrorState extends HomeState {
   String message;
   List<Movie> moviesList=List<Movie>();

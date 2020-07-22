@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:movie_imdb_like_app/networks/constant_sub_urls.dart';
 import 'package:movie_imdb_like_app/utils/app_widgets.dart';
+import 'package:movie_imdb_like_app/utils/convert_date.dart';
 import 'package:movie_imdb_like_app/utils/global.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
@@ -19,14 +20,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   
   HomeState get initialState=>HomeInitialState(); 
   final TextEditingController queryTextEditingController=TextEditingController();
+  final ScrollController scrollController=ScrollController();
   final BehaviorSubject<String> queryBehaviorSubject=BehaviorSubject<String>();
   Stream<String> get queryStream=>queryBehaviorSubject.stream;
   StreamSink<String> get queryStreamSink=>queryBehaviorSubject.sink;
   AppWidgets appWidgets=AppWidgets();
-
+  ConvertDate convertDate=ConvertDate();
   void dispose()  {
     queryBehaviorSubject.close();
     queryTextEditingController.dispose();
+    scrollController.dispose();
   }
 
   bool notLoading=true, notSearchLoading=true;
@@ -117,6 +120,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     searchPage=0;
     queryTextEditingController.text='';
     queryStreamSink.add('');
+    scrollController.animateTo(0, duration: null, curve: null);
     yield HomeLoadedState(moviesList: moviesList);           
   }
 }

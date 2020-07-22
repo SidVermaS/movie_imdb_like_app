@@ -47,7 +47,7 @@ class _HomeState extends State<Home>  {
           decoration: InputDecoration(
             border: InputBorder.none,
            prefixIcon: IconButton(icon: Icon(Icons.search), onPressed: () {
-             
+             homeBloc.scrollController.animateTo(0, duration: null, curve: null);
              homeBloc.add(FetchSearchMoviesEvent());
            },) ,
           suffixIcon:  IconButton(icon: Icon(Icons.close), onPressed: () {
@@ -81,6 +81,8 @@ class _HomeState extends State<Home>  {
             }
             else if(state is HomeLoadedState) {
                return loadMovies(state.moviesList);
+            }else if(state is HomeSearchLoadedState) {
+               return loadMovies(state.moviesList);
             }else if(state is HomeErrorState)  {
                return loadMovies(state.moviesList);
             }
@@ -96,6 +98,7 @@ class _HomeState extends State<Home>  {
       onEndOfPage: ()=>homeBloc.add(FetchMoviesEvent()),
       scrollOffset: 80,
       child: ListView.builder(
+        controller: homeBloc.scrollController,
       itemCount: moviesList.length,
       itemBuilder: (BuildContext context, int index) {
         return  Container(
@@ -107,21 +110,19 @@ class _HomeState extends State<Home>  {
               width:Global.width,
               height: Global.height-(Global.height*0.55),
              child: FadeInImage.assetNetwork(
-        placeholder: 'assets/images/esperanza.jpg',
+        placeholder: 'assets/images/loading.gif',
         image: '${ConstantBaseUrls.baseImageUrl}${moviesList[index].poster_path}',
         fit: BoxFit.cover,
         height: 250.0,
       )),
            
              Container(
-             margin: EdgeInsets.fromLTRB(15, 0, 15, 5),
+             margin: EdgeInsets.fromLTRB(15, 7, 15, 7),
              child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children:<Widget>  [
-            homeBloc.appWidgets.getName('${moviesList[index].vote_count} votes'),
-           Container(
-             margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-             child:  Text(moviesList[index].title, style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold))),
+                 Text('${moviesList[index].title}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700 , fontSize: 15)),
+                   Text('${homeBloc.convertDate.convertToMddyyyy(moviesList[index].release_date)}', style: TextStyle(color: Colors.black54, fontSize: 15)),
             
             ]))
           ]));

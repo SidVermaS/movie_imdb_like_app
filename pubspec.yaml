@@ -31,22 +31,18 @@ dependencies:
   rxdart: ^0.24.1
   bloc: ^5.0.1
   flutter_bloc: ^5.0.1  
-  provider: ^4.3.1
   http: ^0.12.1
-  dio: ^3.0.9
   equatable: ^1.2.0   
   query_params: ^0.6.1
   toast: ^0.1.5
   load: ^0.1.6
   font_awesome_flutter: ^8.8.1   
   shared_preferences: ^0.5.8  
-  path_provider: ^1.6.11
-  flutter_phoenix: ^0.1.0
   shimmer: ^1.1.1 
   material_design_icons_flutter: ^4.0.5345
   outline_material_icons: ^0.1.1
   lazy_load_scrollview: ^1.1.0
-
+  intl: ^0.16.1  
 
   
 
@@ -66,7 +62,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/images/    
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

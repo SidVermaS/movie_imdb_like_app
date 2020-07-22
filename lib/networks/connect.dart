@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_imdb_like_app/utils/global.dart';
 import 'package:movie_imdb_like_app/networks/constant_base_urls.dart';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
-import 'package:http_parser/http_parser.dart';
 
 class Connect {
   Connect() {
