@@ -36,10 +36,16 @@ class _HomeState extends State<Home>  {
 
   Widget build(BuildContext context)  {
     return Scaffold(
-      appBar: AppBar(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(45),
+        child: StreamBuilder(
+          initialData: false,
+        stream: homeBloc.showSearchBarStream,
+        builder: (BuildContext context, AsyncSnapshot<bool> asyncSnapshot)  {
+        return AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: TextField(
+        title: asyncSnapshot.data?TextField(
           onChanged: (String value) {
             homeBloc.queryStreamSink.add(value);
           },
@@ -47,25 +53,24 @@ class _HomeState extends State<Home>  {
           decoration: InputDecoration(
             border: InputBorder.none,
            prefixIcon: IconButton(icon: Icon(Icons.search), onPressed: () {
-             homeBloc.scrollController.animateTo(0, duration: null, curve: null);
+             homeBloc.scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
              homeBloc.add(FetchSearchMoviesEvent());
            },) ,
           suffixIcon:  IconButton(icon: Icon(Icons.close), onPressed: () {
+            homeBloc.showSearchBarStreamSink.add(false);
              homeBloc.add(ClearSearchMoviesEvent());
            },) 
            
           ),
-        )
-
-
-
-
-
-
-
-
-
-      ),
+        ):Text('IMDB', style: TextStyle(color: Colors.black)),
+        actions: <Widget>[
+          asyncSnapshot.data?SizedBox(width: 0,height: 0):
+          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed:(){
+            homeBloc.showSearchBarStreamSink.add(true);
+          })
+        ],
+      );
+      })),
     body:  Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: BlocListener<HomeBloc, HomeState>  (
@@ -118,29 +123,21 @@ class _HomeState extends State<Home>  {
            
              Container(
              margin: EdgeInsets.fromLTRB(15, 7, 15, 7),
-             child: Column(
+             child: Row(children: <Widget>[
+               Expanded(child:Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children:<Widget>  [
                  Text('${moviesList[index].title}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700 , fontSize: 15)),
-                   Text('${homeBloc.convertDate.convertToMddyyyy(moviesList[index].release_date)}', style: TextStyle(color: Colors.black54, fontSize: 15)),
+                   Text('${homeBloc.convertDate.convertToMMMMMddyyyy(moviesList[index].release_date)}', style: TextStyle(color: Colors.black54, fontSize: 15)),
             
+            ])),
+            IconButton(icon: Icon(Icons.visibility, color: Colors.blue), onPressed: ()  {
+
+            })
             ]))
           ]));
       },
     ));
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   } 
     Widget loadShimmer()  {
@@ -163,7 +160,7 @@ class _HomeState extends State<Home>  {
                           padding: EdgeInsets.only(left: 10, right: 10),
                           height: 50, width: double.infinity,
                           child: Row(mainAxisAlignment: MainAxisAlignment.start,children: <Widget>[
-                            // Container(width: 40, height: 40, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white), ),
+                           
                             Container(margin: EdgeInsets.only(left: 10),width: 180, height: 20,color: Colors.white),
                           ],)
                         ),

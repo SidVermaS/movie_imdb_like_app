@@ -2,9 +2,9 @@ import 'package:intl/intl.dart';
 
 class ConvertDate {
 
-  String convertToMddyyyy(String dateTimeString)  {
+  String convertToMMMMMddyyyy(String dateTimeString)  {
     DateTime dateTime=DateFormat('yyyy-mm-dd').parse(dateTimeString);
-    dateTimeString=DateFormat('M dd, yyyy').format(dateTime);
+    dateTimeString=DateFormat('MMMM dd, yyyy').format(dateTime);
     return dateTimeString;
   }
 

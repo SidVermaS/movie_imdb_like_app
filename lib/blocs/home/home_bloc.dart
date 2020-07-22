@@ -24,10 +24,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final BehaviorSubject<String> queryBehaviorSubject=BehaviorSubject<String>();
   Stream<String> get queryStream=>queryBehaviorSubject.stream;
   StreamSink<String> get queryStreamSink=>queryBehaviorSubject.sink;
+
+   final StreamController showSearchBarStreamController=StreamController<bool>();
+  Stream<bool> get showSearchBarStream=>showSearchBarStreamController.stream;
+  StreamSink<bool> get showSearchBarStreamSink=>showSearchBarStreamController.sink;
   AppWidgets appWidgets=AppWidgets();
   ConvertDate convertDate=ConvertDate();
   void dispose()  {
     queryBehaviorSubject.close();
+    showSearchBarStreamController.close();
     queryTextEditingController.dispose();
     scrollController.dispose();
   }
@@ -120,7 +125,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     searchPage=0;
     queryTextEditingController.text='';
     queryStreamSink.add('');
-    scrollController.animateTo(0, duration: null, curve: null);
+    scrollController.animateTo(0, duration: Duration(milliseconds: 250), curve: Curves.easeIn);
     yield HomeLoadedState(moviesList: moviesList);           
   }
 }
