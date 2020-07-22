@@ -46,8 +46,9 @@ dependencies:
   material_design_icons_flutter: ^4.0.5345
   outline_material_icons: ^0.1.1
   lazy_load_scrollview: ^1.1.0
-  infinite_listview: ^1.0.1+1
-  url_launcher: ^5.5.0
+
+
+  
 
 dev_dependencies:
   flutter_test:
